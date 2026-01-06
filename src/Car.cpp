@@ -48,6 +48,8 @@ void Car::update(float deltaTime) {
     // Apply physics
     velocity = velocity + acceleration * deltaTime;
     angle = angle + angularVelocity * deltaTime;
+    x = x + velocity * deltaTime;
+    y = y + velocity * deltaTime;
 
     // Respect bounds
     if (velocity < 0.0f) {
