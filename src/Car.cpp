@@ -2,9 +2,9 @@
 #include <Car.h>
 #include <InputState.h>
 
-Car::Car(float startX, float startY, float startAcceleration, float startAngularVelocity,
-    float maxSpeed, float accelerationRate, float deAccelerationRate, 
-    float frictionRate, float angularVelocityRate, int carWidth, int carHeight)
+Car::Car(float startX, float startY, int carWidth, int carHeight, 
+    float startAcceleration, float startAngularVelocity, float maxSpeed, float accelerationRate, 
+    float deAccelerationRate, float frictionRate, float angularVelocityRate)
     : x(startX), y(startY), velocity(0), angle(0), angularVelocity(startAngularVelocity), 
     MAXSPEED(maxSpeed), acceleration(startAcceleration), ACCELERATIONRATE(accelerationRate), 
     DEACCELERATIONRATE(deAccelerationRate), FRICTIONRATE(frictionRate), 
@@ -25,34 +25,34 @@ void Car::render(SDL_Renderer* renderer) const {
 void Car::handleInput(const InputState& state) {
     // determine if buttons are pressed
     if (state.accelerate == true) {
-        float acceleration = ACCELERATIONRATE;
+        acceleration = ACCELERATIONRATE;
     }
     else {
-        float acceleration = FRICTIONRATE;
+        acceleration = FRICTIONRATE;
     }
     if (state.brake == true) {
-        float acceleration = DEACCELERATIONRATE;
+        acceleration = DEACCELERATIONRATE;
     }
     if (state.turnLeft == true) {
-        float angularVelocity = ANGULARVELOCITYRATE;
+        angularVelocity = ANGULARVELOCITYRATE;
     }
-    else if (state.turnLeft == true) {
-        float angularVelocity = -ANGULARVELOCITYRATE;
+    else if (state.turnRight == true) {
+        angularVelocity = -ANGULARVELOCITYRATE;
     }
     else {
-        float angularVelocity = 0.0f;
+        angularVelocity = 0.0f;
     }
 }
 
 void Car::update(float deltaTime) {
     // Apply physics
-    float velocity = velocity + acceleration * deltaTime;
-    float angle = angle + angularVelocity * deltaTime;
+    velocity = velocity + acceleration * deltaTime;
+    angle = angle + angularVelocity * deltaTime;
 
     // Respect bounds
     if (velocity < 0.0f) {
-        float velocity = 0.0f;
+        velocity = 0.0f;
     } else if (velocity > MAXSPEED) {
-        float velocity = MAXSPEED;
+        velocity = MAXSPEED;
     }
 }

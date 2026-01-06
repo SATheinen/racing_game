@@ -21,9 +21,9 @@ private:
     int width, height; // car size
 
 public:
-    Car(float startX, float startY, float startAcceleration, float startAngularVelocity,
-    float maxSpeed, float accelerationRate, float deAccelerationRate, 
-    float frictionRate, float angularVelocityRate, int carWidth, int carHeight);
+    Car(float startX, float startY, int carWidth, int carHeight, float startAcceleration,
+         float startAngularVelocity, float maxSpeed, float accelerationRate, 
+         float deAccelerationRate, float frictionRate, float angularVelocityRate);
 
     void handleInput(const InputState& state);
     void update(float deltaTime);

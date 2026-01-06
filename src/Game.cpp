@@ -5,6 +5,19 @@
 
 using namespace std;
 
+Uint32 lastFrameTime;
+
+Game::Game()
+    : gameIsRunning(true),
+      window(nullptr),
+      renderer(nullptr),
+      playerCar(480, 320, 40, 60, 0.0f, 0.0f, 40.0f, 10.0f, -10.0f, -2.0f, 3.0f),
+      inputState(),
+      handleInput() {
+}
+Game::~Game() {
+}
+
 bool Game::init() {
     // init SDL
     if(SDL_Init(SDL_INIT_EVERYTHING)==0)
@@ -50,6 +63,11 @@ void Game::runGame() {
 
     while (gameIsRunning == true)
     {
+        // calculate delta time
+        Uint32 currentTime = SDL_GetTicks();
+        float deltaTime = (currentTime - lastFrameTime) / 1000.0f; // convert to seconds
+        lastFrameTime = currentTime;
+
         while (SDL_PollEvent(&event) > 0)
         {
             switch (event.type)
@@ -69,15 +87,4 @@ void Game::runGame() {
         SDL_SetRenderDrawColor(renderer, 0, 0, 100, 255); // Screen color
         SDL_RenderPresent(renderer);
     }
-}
-
-Game::Game()
-    : gameIsRunning(true),
-      window(nullptr),
-      renderer(nullptr),
-      playerCar(480, 320, 40, 60),
-      inputState(),
-      handleInput() {
-}
-Game::~Game() {
 }
