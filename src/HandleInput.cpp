@@ -4,7 +4,7 @@
 
 void HandleInput::processEvent(const SDL_Event& event, InputState& state) {
     if (event.type == SDL_KEYDOWN) {
-        switch(event.key.keysym.scancode){
+        switch(event.key.keysym.scancode) {
             case SDL_SCANCODE_W:
                 state.accelerate = true;
                 break;
@@ -17,10 +17,12 @@ void HandleInput::processEvent(const SDL_Event& event, InputState& state) {
             case SDL_SCANCODE_D:
                 state.turnRight = true;
                 break;
+            default:
+                break;
         }
     }
     else if (event.type == SDL_KEYUP) {
-        switch (event.key.keysym.scancode){
+        switch (event.key.keysym.scancode) {
             case SDL_SCANCODE_W:
                 state.accelerate = false;
                 break;
@@ -32,6 +34,8 @@ void HandleInput::processEvent(const SDL_Event& event, InputState& state) {
                 break;
             case SDL_SCANCODE_D:
                 state.turnRight = false;
+                break;
+            default:
                 break;
         }
     }

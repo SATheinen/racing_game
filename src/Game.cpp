@@ -61,6 +61,9 @@ void Game::runGame() {
             }
             handleInput.processEvent(event, inputState);
         }
+        playerCar.handleInput(inputState);
+        playerCar.update(deltaTime);
+
         SDL_RenderClear(renderer);
         playerCar.render(renderer);
         SDL_SetRenderDrawColor(renderer, 0, 0, 100, 255); // Screen color
