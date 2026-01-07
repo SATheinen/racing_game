@@ -5,13 +5,13 @@
 
 using namespace std;
 
-Uint32 lastFrameTime;
+Uint32 lastFrameTime=0.0;
 
 Game::Game()
     : gameIsRunning(true),
       window(nullptr),
       renderer(nullptr),
-      playerCar(480, 320, 40, 60, 0.0f, 0.0f, 40.0f, 10.0f, -10.0f, -2.0f, 3.0f),
+      playerCar(480, 320, 40, 60, 0.0f, 0.0f, 100.0f, 50.0f, -50.0f, -30.0f, 50.0f),
       inputState(),
       handleInput() {
 }

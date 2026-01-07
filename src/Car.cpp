@@ -1,3 +1,6 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include <SDL.h>
 #include <Car.h>
 #include <InputState.h>
@@ -34,10 +37,10 @@ void Car::handleInput(const InputState& state) {
         acceleration = DEACCELERATIONRATE;
     }
     if (state.turnLeft == true) {
-        angularVelocity = ANGULARVELOCITYRATE;
+        angularVelocity = -ANGULARVELOCITYRATE;
     }
     else if (state.turnRight == true) {
-        angularVelocity = -ANGULARVELOCITYRATE;
+        angularVelocity = ANGULARVELOCITYRATE;
     }
     else {
         angularVelocity = 0.0f;
@@ -48,8 +51,11 @@ void Car::update(float deltaTime) {
     // Apply physics
     velocity = velocity + acceleration * deltaTime;
     angle = angle + angularVelocity * deltaTime;
-    x = x + velocity * deltaTime;
-    y = y + velocity * deltaTime;
+
+    float angleInRadians = angle * M_PI / 180;
+
+    x = x + velocity * deltaTime * sin(angleInRadians);
+    y = y - velocity * deltaTime * cos(angleInRadians);
 
     // Respect bounds
     if (velocity < 0.0f) {
