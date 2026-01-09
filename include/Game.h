@@ -13,6 +13,7 @@ private:
     Car playerCar;
     InputState inputState;
     HandleInput handleInput;
+    float cameraZ;
 
 public:
     Game();
