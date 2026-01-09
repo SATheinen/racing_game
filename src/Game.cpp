@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Car.h"
 #include <iostream>
+#include "Constants.h"
 
 using namespace std;
 
@@ -86,27 +87,28 @@ void Game::runGame() {
         SDL_RenderClear(renderer);
 
         int horizonY = 320;
-        int numSegments = 100;
-        float segmentHeight = 80.0f;
-        float segmentWidth = 700.0f;
-        int trackLength = static_cast<float>(numSegments) * segmentHeight;
+        float segmentHeight = 1.0f;
+        float segmentWidth = 1000.0f;
         cameraZ += 1.0f * deltaTime;
 
-        if (cameraZ > trackLength / 100.0f) {
-            cameraZ -= trackLength / 100.0f;
+        if (cameraZ > TRACK_LENGTH / 1.0f) {
+            cameraZ -= TRACK_LENGTH / 1.0f;
         }
         cout << cameraZ << "\n";
 
-        for (int i = 0; i < numSegments; i++) {
-            float segmentWorldZ = i * 1.0f;
-            
+        for (int i = 0; i < NUM_SEGMENTS - 1; i++) {
+            float segmentWorldZ = i * SEGMENT_LENGTH;
             float relativeZ = segmentWorldZ - cameraZ;
 
-            if (relativeZ <= 0.001f) continue;
+            if (relativeZ <= 0.1f) continue;
 
-            float screenY = horizonY + (200.0f / relativeZ);
+            float screenY = horizonY + (FOV / relativeZ);
+            
+            // next segments position
+            float nextRelativeZ = relativeZ + SEGMENT_LENGTH;
+            float nextScreenY = horizonY + (FOV / nextRelativeZ);
 
-            float stripHeight = segmentHeight / relativeZ;
+            float stripHeight = nextScreenY - screenY;
             float stripWidth = segmentWidth / relativeZ;
 
             if (i % 2 == 0){
@@ -116,7 +118,7 @@ void Game::runGame() {
             }
 
             SDL_Rect strip;
-            strip.x = static_cast<int>((960 - stripWidth) / 2);
+            strip.x = static_cast<int>((SCREEN_WIDTH - stripWidth) / 2);
             strip.y = static_cast<int>(screenY);
             strip.w = static_cast<int>(stripWidth);
             strip.h = static_cast<int>(stripHeight);
