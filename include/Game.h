@@ -3,6 +3,8 @@
 #include <Car.h>
 #include <InputState.h>
 #include <HandleInput.h>
+#include <Road.h>
+#include <Camera.h>
 
 class Game
 {
@@ -11,9 +13,10 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     Car playerCar;
+    Road road;
+    Camera camera;
     InputState inputState;
     HandleInput handleInput;
-    float cameraZ;
 
 public:
     Game();

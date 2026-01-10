@@ -13,9 +13,10 @@ Game::Game()
       window(nullptr),
       renderer(nullptr),
       playerCar(480, 320, 40, 60, 0.0f, 0.0f, 100.0f, 50.0f, -50.0f, -30.0f, 50.0f),
+      road(1.0f, 1000.0f, SEGMENT_LENGTH, TRACK_LENGTH, SCREEN_HEIGHT / 2),
       inputState(),
       handleInput(),
-      cameraZ(0.0f) {
+      camera(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2, 1.0f) {
 }
 Game::~Game() {
 }
@@ -86,45 +87,7 @@ void Game::runGame() {
 
         SDL_RenderClear(renderer);
 
-        int horizonY = 320;
-        float segmentHeight = 1.0f;
-        float segmentWidth = 1000.0f;
-        cameraZ += 1.0f * deltaTime;
-
-        if (cameraZ > TRACK_LENGTH / 1.0f) {
-            cameraZ -= TRACK_LENGTH / 1.0f;
-        }
-        cout << cameraZ << "\n";
-
-        for (int i = 0; i < NUM_SEGMENTS - 1; i++) {
-            float segmentWorldZ = i * SEGMENT_LENGTH;
-            float relativeZ = segmentWorldZ - cameraZ;
-
-            if (relativeZ <= 0.1f) continue;
-
-            float screenY = horizonY + (FOV / relativeZ);
-            
-            // next segments position
-            float nextRelativeZ = relativeZ + SEGMENT_LENGTH;
-            float nextScreenY = horizonY + (FOV / nextRelativeZ);
-
-            float stripHeight = nextScreenY - screenY;
-            float stripWidth = segmentWidth / relativeZ;
-
-            if (i % 2 == 0){
-                SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
-            } else {
-                SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
-            }
-
-            SDL_Rect strip;
-            strip.x = static_cast<int>((SCREEN_WIDTH - stripWidth) / 2);
-            strip.y = static_cast<int>(screenY);
-            strip.w = static_cast<int>(stripWidth);
-            strip.h = static_cast<int>(stripHeight);
-
-            SDL_RenderFillRect(renderer, &strip);
-        }
+        road.render(renderer);
         playerCar.render(renderer);
         SDL_SetRenderDrawColor(renderer, 0, 0, 100, 255); // Screen color
         SDL_RenderPresent(renderer);
