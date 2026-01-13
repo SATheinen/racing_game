@@ -1,6 +1,13 @@
 #pragma once
 #include <SDL.h>
 #include <Constants.h>
+#include <vector>
+#include <Camera.h>
+
+struct RoadSegment {
+    float worldZ;
+    SDL_Color color;
+};
 
 class Road
 {
@@ -10,8 +17,8 @@ private:
     float segmentLength;
     float trackLength;
     int horizonY;
+    std::vector<RoadSegment> segments;
 public:
-    Road(int SegmentHeight, int SegmentWidth, int SegmentLength, int TrackLength, float HorizonY);
-    void update(Uint32 deltaTime, float cameraZ);
-    void render(SDL_Renderer* renderer);
+    Road(int SegmentHeight, int SegmentWidth, int SegmentLength, float TrackLength, float HorizonY);
+    void render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera);
 };

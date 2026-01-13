@@ -1,8 +1,9 @@
 #include <Camera.h>
+#include <iostream>
 
-Camera::Camera(int startX, int startY, int startZ)
-        : x(startX), y(startY), z(startZ) {}
+Camera::Camera(float startX, float startY, float startZ, float startVelocity, float fov = FOV)
+        : x(startX), y(startY), z(startZ), velocity(startVelocity), fov(fov) {}
 
-void Camera::update(Uint32 deltaTime) {
-    z += velocity * deltaTime;
+void Camera::update(float deltaTime) {
+    z = z + velocity * deltaTime;
 }

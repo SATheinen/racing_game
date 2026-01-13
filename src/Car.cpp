@@ -5,13 +5,14 @@
 #include <Car.h>
 #include <InputState.h>
 
-Car::Car(float startX, float startY, int carWidth, int carHeight, 
-    float startAcceleration, float startAngularVelocity, float maxSpeed, float accelerationRate, 
-    float deAccelerationRate, float frictionRate, float angularVelocityRate)
-    : x(startX), y(startY), velocity(0), angle(0), angularVelocity(startAngularVelocity), 
-    MAXSPEED(maxSpeed), acceleration(startAcceleration), ACCELERATIONRATE(accelerationRate), 
+Car::Car(float startX, float startY, int carWidth, int carHeight, float startVelocity,
+    float startAcceleration, float startAngle, float startAngularVelocity, float maxSpeed, 
+    float accelerationRate, float deAccelerationRate, float frictionRate, float angularVelocityRate)
+    : x(startX), y(startY), width(carWidth), height(carHeight), velocity(0), 
+    acceleration(startAcceleration), angularVelocity(startAngularVelocity), angle(0), 
+    MAXSPEED(maxSpeed), ACCELERATIONRATE(accelerationRate), 
     DEACCELERATIONRATE(deAccelerationRate), FRICTIONRATE(frictionRate), 
-    ANGULARVELOCITYRATE(angularVelocityRate), width(carWidth), height(carHeight) {
+    ANGULARVELOCITYRATE(angularVelocityRate) {
 }
 
 void Car::render(SDL_Renderer* renderer) const {
@@ -54,8 +55,8 @@ void Car::update(float deltaTime) {
 
     float angleInRadians = angle * M_PI / 180;
 
-    x = x + velocity * deltaTime * sin(angleInRadians);
-    y = y - velocity * deltaTime * cos(angleInRadians);
+    //x = x + velocity * deltaTime * sin(angleInRadians);
+    //y = y - velocity * deltaTime * cos(angleInRadians);
 
     // Respect bounds
     if (velocity < 0.0f) {
@@ -63,4 +64,8 @@ void Car::update(float deltaTime) {
     } else if (velocity > MAXSPEED) {
         velocity = MAXSPEED;
     }
+}
+
+float Car::getVelocity() {
+    return velocity;
 }

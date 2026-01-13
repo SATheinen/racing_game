@@ -21,9 +21,9 @@ private:
     int width, height; // car size
 
 public:
-    Car(float startX, float startY, int carWidth, int carHeight, float startAcceleration,
-         float startAngularVelocity, float maxSpeed, float accelerationRate, 
-         float deAccelerationRate, float frictionRate, float angularVelocityRate);
+    Car(float startX, float startY, int carWidth, int carHeight, float startVelocity,
+         float startAcceleration, float startAngle, float startAngularVelocity, float maxSpeed, 
+         float accelerationRate, float deAccelerationRate, float frictionRate, float angularVelocityRate);
 
     void handleInput(const InputState& state);
     void update(float deltaTime);
@@ -37,6 +37,9 @@ public:
 
     // renderer
     void render(SDL_Renderer* renderer) const;
+
+    // output methods
+    float getVelocity();
 };
 
 

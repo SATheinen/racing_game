@@ -12,11 +12,11 @@ Game::Game()
     : gameIsRunning(true),
       window(nullptr),
       renderer(nullptr),
-      playerCar(480, 320, 40, 60, 0.0f, 0.0f, 100.0f, 50.0f, -50.0f, -30.0f, 50.0f),
+      playerCar(480, 320, 40, 60, 0.0f, 0.0f, 0.0f, 0.0f, 100.0f, 50.0f, -50.0f, 50.0f, 1.0f),
       road(1.0f, 1000.0f, SEGMENT_LENGTH, TRACK_LENGTH, SCREEN_HEIGHT / 2),
       inputState(),
       handleInput(),
-      camera(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2, 1.0f) {
+      camera(static_cast<float>(SCREEN_WIDTH / 2), static_cast<float>(SCREEN_HEIGHT / 2), 1.0f, 10.0f, FOV) {
 }
 Game::~Game() {
 }
@@ -85,9 +85,12 @@ void Game::runGame() {
         playerCar.handleInput(inputState);
         playerCar.update(deltaTime);
 
-        SDL_RenderClear(renderer);
+        camera.velocity = playerCar.getVelocity();
+        camera.update(deltaTime);
 
-        road.render(renderer);
+        SDL_RenderClear(renderer);
+        
+        road.render(renderer, deltaTime, camera);
         playerCar.render(renderer);
         SDL_SetRenderDrawColor(renderer, 0, 0, 100, 255); // Screen color
         SDL_RenderPresent(renderer);
