@@ -19,6 +19,6 @@ private:
     int horizonY;
     std::vector<RoadSegment> segments;
 public:
-    Road(int SegmentHeight, int SegmentWidth, int SegmentLength, float TrackLength, float HorizonY);
+    Road(float SegmentHeight, float SegmentWidth, float SegmentLength, float TrackLength, float HorizonY);
     void render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera);
 };

@@ -12,7 +12,7 @@ Game::Game()
     : gameIsRunning(true),
       window(nullptr),
       renderer(nullptr),
-      playerCar(480, 320, 40, 60, 0.0f, 0.0f, 0.0f, 0.0f, 100.0f, 50.0f, -50.0f, 50.0f, 1.0f),
+      playerCar(460, 500, 40, 60, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 10.0f, -10.0f, -5.0f, 1.0f),
       road(1.0f, 1000.0f, SEGMENT_LENGTH, TRACK_LENGTH, SCREEN_HEIGHT / 2),
       inputState(),
       handleInput(),
