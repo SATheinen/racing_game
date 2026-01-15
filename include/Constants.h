@@ -10,6 +10,6 @@ const float CAMERA_HEIGHT = 300.0f;
 const float FOV = 2.0f;
 
 // Track constants
-const int NUM_SEGMENTS = 4000;
-const float SEGMENT_LENGTH = 0.1f;
-const float TRACK_LENGTH = SEGMENT_LENGTH * static_cast<float>(NUM_SEGMENTS);
+const int NUM_ROAD_SAMPLES = 4000;
+const float SAMPLE_SPACING = 0.1f;
+const float VISIBLE_DISTANCE = SAMPLE_SPACING * static_cast<float>(NUM_ROAD_SAMPLES);

@@ -21,7 +21,7 @@ private:
     int width, height; // car size
 
 public:
-    Car(float startX, float startY, int carWidth, int carHeight, float startVelocity,
+    Car(float startX, float startY, int carWidth, int carHeight, float velocity,
          float startAcceleration, float startAngle, float startAngularVelocity, float maxSpeed, 
          float accelerationRate, float deAccelerationRate, float frictionRate, float angularVelocityRate);
 
@@ -39,7 +39,8 @@ public:
     void render(SDL_Renderer* renderer) const;
 
     // output methods
-    float getVelocity();
+    float getVelocityX();
+    float getVelocityZ();
 };
 
 

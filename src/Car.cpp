@@ -1,11 +1,11 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
-
+#include <iostream>
 #include <SDL.h>
 #include <Car.h>
 #include <InputState.h>
 
-Car::Car(float startX, float startY, int carWidth, int carHeight, float startVelocity,
+Car::Car(float startX, float startY, int carWidth, int carHeight, float startVelocity, 
     float startAcceleration, float startAngle, float startAngularVelocity, float maxSpeed, 
     float accelerationRate, float deAccelerationRate, float frictionRate, float angularVelocityRate)
     : x(startX), y(startY), width(carWidth), height(carHeight), velocity(0), 
@@ -50,13 +50,18 @@ void Car::handleInput(const InputState& state) {
 
 void Car::update(float deltaTime) {
     // Apply physics
-    velocity = velocity + acceleration * deltaTime;
+    angle = angle * (1 - deltaTime * 0.9); // Decay of turning angle
+    std::cout << angle << std::endl;
     angle = angle + angularVelocity * deltaTime;
+    if (angle > 45) {
+        angle = 45;
+    } else if (angle < -45) {
+        angle = -45;
+    }
 
     float angleInRadians = angle * M_PI / 180;
 
-    //x = x + velocity * deltaTime * sin(angleInRadians);
-    //y = y - velocity * deltaTime * cos(angleInRadians);
+    velocity = velocity + acceleration * deltaTime;
 
     // Respect bounds
     if (velocity < 0.0f) {
@@ -64,8 +69,15 @@ void Car::update(float deltaTime) {
     } else if (velocity > MAXSPEED) {
         velocity = MAXSPEED;
     }
+
 }
 
-float Car::getVelocity() {
-    return velocity;
+float Car::getVelocityX() {
+    float angleInRadians = angle * M_PI / 180;
+    return velocity * sin(angleInRadians);
+}
+
+float Car::getVelocityZ() {
+    float angleInRadians = angle * M_PI / 180;
+    return velocity * cos(angleInRadians);
 }

@@ -6,19 +6,19 @@
 
 struct RoadSegment {
     float worldZ;
+    float curve;
     SDL_Color color;
 };
 
 class Road
 {
 private:
-    float segmentHeight;
     float segmentWidth;
     float segmentLength;
     float trackLength;
     int horizonY;
     std::vector<RoadSegment> segments;
 public:
-    Road(float SegmentHeight, float SegmentWidth, float SegmentLength, float TrackLength, float HorizonY);
+    Road(float SegmentWidth, float SampleSpacing, float VisibleDistance, float HorizonY);
     void render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera);
 };

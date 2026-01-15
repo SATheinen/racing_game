@@ -12,11 +12,11 @@ Game::Game()
     : gameIsRunning(true),
       window(nullptr),
       renderer(nullptr),
-      playerCar(460, 500, 40, 60, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 10.0f, -10.0f, -5.0f, 1.0f),
-      road(1.0f, 1000.0f, SEGMENT_LENGTH, TRACK_LENGTH, SCREEN_HEIGHT / 2),
+      playerCar(460, 500, 40, 60, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 10.0f, -10.0f, -5.0f, 300.0f),
+      road(1000.0f, SAMPLE_SPACING, VISIBLE_DISTANCE, SCREEN_HEIGHT / 2),
       inputState(),
       handleInput(),
-      camera(static_cast<float>(SCREEN_WIDTH / 2), static_cast<float>(SCREEN_HEIGHT / 2), 1.0f, 10.0f, FOV) {
+      camera(static_cast<float>(SCREEN_WIDTH / 2), static_cast<float>(SCREEN_HEIGHT / 2), 1.0f, 0.0f, 0.0f, FOV) {
 }
 Game::~Game() {
 }
@@ -85,7 +85,8 @@ void Game::runGame() {
         playerCar.handleInput(inputState);
         playerCar.update(deltaTime);
 
-        camera.velocity = playerCar.getVelocity();
+        camera.velocityZ = playerCar.getVelocityZ();
+        camera.velocityX = playerCar.getVelocityX();
         camera.update(deltaTime);
 
         SDL_RenderClear(renderer);
