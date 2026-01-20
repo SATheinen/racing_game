@@ -6,7 +6,9 @@
 
 struct RoadSegment {
     float worldZ;
-    float curve;
+    float worldX;
+    float heading; // direction road is facing in radians
+    float curve; // rate of turning in radians per distance
     SDL_Color color;
 };
 
@@ -21,4 +23,5 @@ private:
 public:
     Road(float SegmentWidth, float SampleSpacing, float VisibleDistance, float HorizonY);
     void render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera);
+    float getRoadAngleAt(float z);
 };

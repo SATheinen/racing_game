@@ -1,16 +1,30 @@
 #include <Road.h>
 #include <iostream>
+#include <cmath>
 
 Road::Road(float SegmentWidth, float SampleSpacing, float VisibleDistance, float HorizonY)
     : segmentWidth(SegmentWidth), segmentLength(SampleSpacing),
     trackLength(VisibleDistance), horizonY(HorizonY) {
 
     segments.reserve(NUM_ROAD_SAMPLES);
+
+    float currentX = 0.0f;
+    float currentHeading = 0.0f;
+
     for (int i = 0; i < NUM_ROAD_SAMPLES; i++) {
         RoadSegment seg;
-        seg.worldZ = static_cast<float>(i) * segmentLength + 0.1f;
-        seg.curve = 30.0f;
+        seg.worldZ = static_cast<float>(i) * segmentLength;
+        seg.worldX = currentX;
+        seg.heading = currentHeading;
+
+        // define curve
+        seg.curve = 10.0f * sin(i * 0.01f);
+
         segments.push_back(seg);
+
+        // update heading and x for next element
+        currentX += seg.curve * segmentLength;
+        currentHeading += sin(currentHeading) * segmentLength;
     }
 }
 
@@ -58,4 +72,8 @@ void Road::render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera) {
 
         SDL_RenderFillRect(renderer, &strip);
     }
+}
+
+float Road::getRoadAngleAt(float z) {
+    return segments[static_cast<int>(z / SAMPLE_SPACING)].heading;
 }

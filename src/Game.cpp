@@ -12,7 +12,7 @@ Game::Game()
     : gameIsRunning(true),
       window(nullptr),
       renderer(nullptr),
-      playerCar(460, 500, 40, 60, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 10.0f, -10.0f, -5.0f, 300.0f),
+      playerCar(460, 500, 40, 60, 0.0f, 0.0f, 0.0f, 0.0f, 5.0f, 2.0f, -2.0f, -1.0f, 1.0f),
       road(1000.0f, SAMPLE_SPACING, VISIBLE_DISTANCE, SCREEN_HEIGHT / 2),
       inputState(),
       handleInput(),
@@ -83,7 +83,7 @@ void Game::runGame() {
             handleInput.processEvent(event, inputState);
         }
         playerCar.handleInput(inputState);
-        playerCar.update(deltaTime);
+        playerCar.update(deltaTime, road.getRoadAngleAt(playerCar.getZ()));
 
         camera.velocityZ = playerCar.getVelocityZ();
         camera.velocityX = playerCar.getVelocityX();
@@ -92,7 +92,7 @@ void Game::runGame() {
         SDL_RenderClear(renderer);
         
         road.render(renderer, deltaTime, camera);
-        playerCar.render(renderer);
+        playerCar.render(renderer, camera);
         SDL_SetRenderDrawColor(renderer, 0, 0, 100, 255); // Screen color
         SDL_RenderPresent(renderer);
     }
