@@ -85,9 +85,9 @@ void Game::runGame() {
         playerCar.handleInput(inputState);
         playerCar.update(deltaTime, road.getRoadAngleAt(playerCar.getZ()));
 
-        camera.velocityZ = playerCar.getVelocityZ();
-        camera.velocityX = playerCar.getVelocityX();
-        camera.update(deltaTime);
+        camera.z = playerCar.getZ();
+        camera.x = playerCar.getX();
+        //camera.update(deltaTime);
 
         SDL_RenderClear(renderer);
         

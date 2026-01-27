@@ -79,7 +79,7 @@ void Car::update(float deltaTime, float roadHeading) {
 }
 
 float Car::getVelocityX() {
-    return velocity * sin(angleInRadians) * 50.0f;
+    return velocity * sin(angleInRadians) * 30.0f;
 }
 
 float Car::getVelocityZ() {
