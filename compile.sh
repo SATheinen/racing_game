@@ -7,7 +7,7 @@ export CPLUS_INCLUDE_PATH
 # Compile ALL .cpp files in src/
 g++ ./src/*.cpp -Iinclude -o game \
     $(/opt/homebrew/bin/sdl2-config --cflags --libs) \
-    -std=c++17 -lSDL2_ttf
+    -std=c++17 -lSDL2_ttf -lSDL2_image
 
 # Run the game
 ./game

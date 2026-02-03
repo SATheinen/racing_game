@@ -22,6 +22,6 @@ private:
     std::vector<RoadSegment> segments;
 public:
     Road(float SegmentWidth, float SampleSpacing, float VisibleDistance, float HorizonY);
-    void render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera);
+    void render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera, float CarDistFromCamera);
     float getRoadAngleAt(float z);
 };

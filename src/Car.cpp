@@ -6,26 +6,29 @@
 #include <InputState.h>
 #include <Road.h>
 
-Car::Car(float startX, float startZ, int carWidth, int carHeight, float startVelocity, 
+Car::Car(float distFromCamera, float startX, float startZ, int carWidth, int carHeight, float startVelocity, 
     float startAcceleration, float startAngleInRadians, float startAngularVelocity, float maxSpeed, 
     float accelerationRate, float deAccelerationRate, float frictionRate, float angularVelocityRate)
-    : x(startX), z(startZ), width(carWidth), height(carHeight), velocity(0), 
+    : distFromCamera(distFromCamera), x(startX), z(startZ), width(carWidth), height(carHeight), velocity(0), 
     acceleration(startAcceleration), angularVelocity(startAngularVelocity), angleInRadians(0), 
     MAXSPEED(maxSpeed), ACCELERATIONRATE(accelerationRate), 
     DEACCELERATIONRATE(deAccelerationRate), FRICTIONRATE(frictionRate), 
     ANGULARVELOCITYRATE(angularVelocityRate) {
 }
 
-void Car::render(SDL_Renderer* renderer, Camera& camera) const {
-    SDL_Rect carRect;
+void Car::render(SDL_Renderer* renderer, Camera& camera, SDL_Texture* sprite) const {
+    
+    SDL_Rect destRect;
+    destRect.x = (SCREEN_WIDTH - width) / 2;
+    destRect.y = (SCREEN_HEIGHT - height);
+    destRect.w = width;
+    destRect.h = height;
 
-    carRect.x = static_cast<int>(x);
-    carRect.y = static_cast<int>(z);
-    carRect.w = width;
-    carRect.h = height;
-
-    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderFillRect(renderer, &carRect);
+    double angleDegrees = angleInRadians * 180 / M_PI;
+    SDL_RenderCopyEx(renderer, sprite, NULL, &destRect,
+                    angleDegrees,
+                    NULL,
+                    SDL_FLIP_NONE);
 }
 
 void Car::handleInput(const InputState& state) {
@@ -75,11 +78,11 @@ void Car::update(float deltaTime, float roadHeading) {
     }
 
     // decay of turning rate
-    angleInRadians = angleInRadians * (1 - deltaTime * 0.9); // Decay of turning angle
+    angleInRadians = angleInRadians * (1 - deltaTime * 0.8); // Decay of turning angle
 }
 
 float Car::getVelocityX() {
-    return velocity * sin(angleInRadians) * 30.0f;
+    return velocity * sin(angleInRadians);
 }
 
 float Car::getVelocityZ() {
@@ -92,4 +95,8 @@ float Car::getX() {
 
 float Car::getZ() {
     return z;
+}
+
+float Car::getDistFromCamera() {
+    return distFromCamera;
 }

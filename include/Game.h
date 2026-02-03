@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include <SDL_image.h>
 #include <Car.h>
 #include <InputState.h>
 #include <HandleInput.h>
@@ -17,6 +18,8 @@ private:
     Camera camera;
     InputState inputState;
     HandleInput handleInput;
+
+    SDL_Texture* carTexture;
 
 public:
     Game();

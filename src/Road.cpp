@@ -28,7 +28,7 @@ Road::Road(float SegmentWidth, float SampleSpacing, float VisibleDistance, float
     }
 }
 
-void Road::render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera) {
+void Road::render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera, float carDistFromCamera) {
 
     if (camera.z > trackLength / 1.0f) {
         camera.z -= trackLength / 1.0f;
@@ -39,7 +39,6 @@ void Road::render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera) {
         const RoadSegment& nextSeg = segments[i + 1];
 
         // Calculate seg center
-        float roadCenterX = SCREEN_WIDTH / 2;
         float curveOffset = seg.curve * (camera.z - seg.worldZ);
 
         // Calculate realtive position
@@ -65,7 +64,7 @@ void Road::render(SDL_Renderer* renderer, Uint32 deltaTime, Camera& camera) {
         }
 
         SDL_Rect strip;
-        strip.x = static_cast<int>((SCREEN_WIDTH - static_cast<int>(stripWidth) / 2 - camera.x + curveOffset));
+        strip.x = static_cast<int>((SCREEN_WIDTH - static_cast<int>(stripWidth)) / 2 - camera.x * carDistFromCamera + curveOffset);
         strip.y = static_cast<int>(screenY);
         strip.w = static_cast<int>(stripWidth);
         strip.h = static_cast<int>(stripHeight);

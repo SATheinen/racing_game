@@ -7,6 +7,7 @@ class Car
 {
 private:
     // Physics Properties
+    float distFromCamera;
     float x, z; // position
     float velocity; // velocity
     float acceleration; // acceleration
@@ -22,7 +23,7 @@ private:
     int width, height; // car size
 
 public:
-    Car(float startX, float startZ, int carWidth, int carHeight, float velocity,
+    Car(float distFromCamera, float startX, float startZ, int carWidth, int carHeight, float velocity,
          float startAcceleration, float startAngleInRadians, float startAngularVelocity, float maxSpeed, 
          float accelerationRate, float deAccelerationRate, float frictionRate, float angularVelocityRate);
 
@@ -31,13 +32,14 @@ public:
     SDL_Rect getRenderRect() const;
 
     // renderer
-    void render(SDL_Renderer* renderer, Camera& camera) const;
+    void render(SDL_Renderer* renderer, Camera& camera, SDL_Texture* sprite) const;
 
     // output methods
     float getVelocityX();
     float getVelocityZ();
     float getX();
     float getZ();
+    float getDistFromCamera();
 };
 
 

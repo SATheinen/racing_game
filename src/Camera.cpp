@@ -6,5 +6,5 @@ Camera::Camera(float startX, float startY, float startZ, float startVelocityZ, f
 
 void Camera::update(float deltaTime) {
     z = z + velocityZ * deltaTime * fov;
-    x = x + velocityX * deltaTime;
+    x = x + velocityX * deltaTime * fov;
 }
